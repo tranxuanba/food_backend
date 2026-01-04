@@ -1,0 +1,19 @@
+# Maven
+/target/
+
+# Eclipse / STS
+.metadata/
+.settings/
+.classpath
+.project
+.factorypath
+
+# Logs
+*.log
+
+# Uploads (nếu là file runtime)
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db

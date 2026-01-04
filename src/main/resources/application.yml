@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5435/fresh_food_shop
+    url: jdbc:postgresql://localhost:5432/food1
     username: postgres
-    password: 123456
+    password: 1
     driver-class-name: org.postgresql.Driver
 
   jpa:

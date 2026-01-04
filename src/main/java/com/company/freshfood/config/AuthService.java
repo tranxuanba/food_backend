@@ -1,5 +1,6 @@
 package com.company.freshfood.config;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,8 +10,10 @@ import org.springframework.util.CollectionUtils;
 import com.company.freshfood.dto.UserInfoResponse;
 import com.company.freshfood.dto.UserRequest;
 import com.company.freshfood.dto.UserResponse;
+import com.company.freshfood.entity.CartEntity;
 import com.company.freshfood.entity.UserEntity;
 import com.company.freshfood.mapper.UserMapper;
+import com.company.freshfood.repository.CartRepository;
 import com.company.freshfood.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
 
 	private final UserRepository userRepository;
+	private final CartRepository cartRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
 
@@ -50,6 +54,12 @@ public class AuthService {
 		user.setRoleId(2L);
 		user.setStatus("0");
 		user = userRepository.save(user);
+
+		CartEntity cart = new CartEntity();
+		cart.setUpdatedAt(LocalDateTime.now());
+		cart.setCreateUserId(user.getUserId().toString());
+		cart.setCreateUserName(request.getFullName());
+		cartRepository.save(cart);
 
 		return UserMapper.mapToUserCreateResponse(user);
 	}

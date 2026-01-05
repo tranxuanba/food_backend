@@ -51,7 +51,8 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public List<FoodSearchResponse> getFoodList(FoodRequest.FoodSearchRequest request) {
 		List<FoodSearchResponse> foodList = new ArrayList<>();
-		foodList = foodRepository.findFoodListByFoodName(request.getFoodName(), request.getCategoryId());
+		foodList = foodRepository.findFoodListByFoodName(request.getFoodName(), request.getCategoryId(),
+				request.getLimit(), request.getOffset());
 		return foodList;
 	}
 

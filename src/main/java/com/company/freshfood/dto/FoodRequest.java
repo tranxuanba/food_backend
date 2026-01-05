@@ -44,6 +44,10 @@ public class FoodRequest {
 		private Long categoryId;
 
 		private String foodName;
+
+		private Integer limit;
+
+		private Integer offset;
 	}
 
 	@Getter

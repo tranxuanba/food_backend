@@ -10,4 +10,6 @@ public interface FoodSearchResponse {
 	BigDecimal getPrice();
 
 	String getImageUrl();
+	
+	Integer getTotalCount();
 }

@@ -13,34 +13,37 @@ import com.company.freshfood.entity.FoodEntity;
 public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 	@Query(value = """
 			    SELECT
-			        MF.FOOD_ID,
-			        MF.FOOD_NAME,
-			        MF.PRICE,
-			        MFI.IMAGE_URL
-			    FROM
-			    	M_FOOD MF
-			    INNER JOIN
-			    	M_FOOD_CATEGORY MFC
-			    	ON MFC.CATEGORY_ID = MF.CATEGORY_ID
-			    	AND MFC.DELETED_FLAG = '0'
-			    INNER JOIN
-			    	M_FOOD_IMAGE MFI
-			    	ON MFI.FOOD_ID = MF.FOOD_ID
-			    	AND MFI.DELETED_FLAG = '0'
-			    WHERE
-			    	MF.DELETED_FLAG = '0'
-			    	AND (
-			       		:FOOD_NAME IS NULL
-			       		OR :FOOD_NAME = ''
-			       		OR MF.FOOD_NAME ILIKE CONCAT('%', :FOOD_NAME, '%')
-			   		)
-			   		AND (
-			         :CATEGORY_ID IS NULL
-			         OR MF.CATEGORY_ID = :CATEGORY_ID
-			     	)
+				    MF.FOOD_ID,
+				    MF.FOOD_NAME,
+				    MF.PRICE,
+				    MFI.IMAGE_URL,
+				    COUNT(*) OVER() AS TOTAL_COUNT
+				FROM
+				    M_FOOD MF
+				INNER JOIN
+				    M_FOOD_CATEGORY MFC
+				    ON MFC.CATEGORY_ID = MF.CATEGORY_ID
+				    AND MFC.DELETED_FLAG = '0'
+				INNER JOIN
+				    M_FOOD_IMAGE MFI
+				    ON MFI.FOOD_ID = MF.FOOD_ID
+				    AND MFI.DELETED_FLAG = '0'
+				WHERE
+				    MF.DELETED_FLAG = '0'
+				    AND (
+				        :FOOD_NAME IS NULL
+				        OR :FOOD_NAME = ''
+				        OR MF.FOOD_NAME ILIKE CONCAT('%', :FOOD_NAME, '%')
+				    )
+				    AND (
+				        :CATEGORY_ID IS NULL
+				        OR MF.CATEGORY_ID = :CATEGORY_ID
+				    )
+				ORDER BY MF.FOOD_ID
+				LIMIT :LIMIT OFFSET :OFFSET
 			""", nativeQuery = true)
 	List<FoodSearchResponse> findFoodListByFoodName(@Param("FOOD_NAME") String foodName,
-			@Param("CATEGORY_ID") Long categoryId);
+			@Param("CATEGORY_ID") Long categoryId, @Param("LIMIT") Integer limit, @Param("OFFSET") Integer offset);
 
 	@Query(value = """
 			    SELECT

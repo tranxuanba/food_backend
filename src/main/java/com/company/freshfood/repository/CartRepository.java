@@ -39,6 +39,7 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
 			    WHERE
 			    	MC.DELETED_FLAG = '0'
 			   		AND MC.CREATE_USER_ID = :USER_ID
+			   	ORDER BY MCI.CART_ITEM_ID
 			""", nativeQuery = true)
 	List<CartMeResponse> findCartListByUserId(@Param("USER_ID") String userId);
 

@@ -56,12 +56,14 @@ public class UserResponse {
 		private final Long userId;
 		private final String username; // email hoặc username
 		private final String password;
+		private final String email;
 		private final Collection<? extends GrantedAuthority> authorities;
 
 		public CustomUserDetails(UserInfoResponse user) {
 			this.userId = user.getUserId();
 			this.username = user.getFullName();
 			this.password = user.getPasswordHash();
+			this.email = user.getEmail();
 			this.authorities = Stream.of(user.getRoleName()).map(SimpleGrantedAuthority::new).toList();
 		}
 
@@ -77,6 +79,10 @@ public class UserResponse {
 		@Override
 		public String getPassword() {
 			return password;
+		}
+
+		public String getEmail() {
+			return email;
 		}
 
 		@Override

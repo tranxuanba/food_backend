@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import com.company.freshfood.dto.UserInfoResponse;
 import com.company.freshfood.dto.UserRequest;
 import com.company.freshfood.dto.UserResponse;
+import com.company.freshfood.dto.UserResponse.CustomUserDetails;
 import com.company.freshfood.entity.CartEntity;
 import com.company.freshfood.entity.UserEntity;
 import com.company.freshfood.mapper.UserMapper;
@@ -38,10 +39,10 @@ public class AuthService {
 			throw new RuntimeException("Email hoặc mật khẩu không đúng");
 		}
 		String token = jwtService.generateToken(userInfoList.get(0));
-		return UserMapper.mapToUserInfoResponse(userInfoList.get(0), token);
+		return UserMapper.mapToUserInfoResponse(token);
 	}
 
-	public UserResponse.UserCreateResponse registerBuyer(UserRequest.CreateRequest request) {
+	public void registerBuyer(UserRequest.CreateRequest request) {
 
 		if (userRepository.existsByEmail(request.getEmail(), "0")) {
 			throw new RuntimeException("Email đã được sử dụng");
@@ -60,7 +61,9 @@ public class AuthService {
 		cart.setCreateUserId(user.getUserId().toString());
 		cart.setCreateUserName(request.getFullName());
 		cartRepository.save(cart);
+	}
 
-		return UserMapper.mapToUserCreateResponse(user);
+	public UserResponse.UserDetailsResponse userMe(CustomUserDetails userDetails) {
+		return UserMapper.mapToUserDetailsResponse(userDetails);
 	}
 }

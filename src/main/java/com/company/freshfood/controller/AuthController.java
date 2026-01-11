@@ -27,13 +27,14 @@ public class AuthController {
 	}
 
 	@PostMapping("/auth/register")
-	public UserResponse.UserCreateResponse registerBuyer(@RequestBody @Valid UserRequest.CreateRequest request) {
-		return authService.registerBuyer(request);
+	public void registerBuyer(@RequestBody @Valid UserRequest.CreateRequest request) {
+		authService.registerBuyer(request);
 	}
 
 	@PostMapping("/users/me")
-	public UserResponse.CustomUserDetails userMe(@AuthenticationPrincipal CustomUserDetails userDetails) {
-		return userDetails;
+	public UserResponse.UserDetailsResponse userMe(@AuthenticationPrincipal CustomUserDetails userDetails) {
+		UserResponse.UserDetailsResponse userInfo = authService.userMe(userDetails);
+		return userInfo;
 	}
 
 }

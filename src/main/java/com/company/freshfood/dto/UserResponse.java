@@ -18,20 +18,6 @@ public class UserResponse {
 	@Builder
 	public static class UserLoginResponse {
 
-		private String email;
-
-		private String fullName;
-
-		private String passwordHash;
-
-		private Long userId;
-
-		private String phone;
-
-		private String status;
-
-		private String roleName;
-
 		private String token;
 	}
 
@@ -43,6 +29,21 @@ public class UserResponse {
 		private Long userId;
 
 		private String fullName;
+
+		private String email;
+
+		private String roleName;
+
+	}
+
+	@Getter
+	@Setter
+	@Builder
+	public static class UserDetailsResponse {
+
+		private Long userId;
+
+		private String username;
 
 		private String email;
 

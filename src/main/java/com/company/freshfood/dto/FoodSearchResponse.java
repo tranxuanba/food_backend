@@ -4,6 +4,16 @@ import java.math.BigDecimal;
 
 public interface FoodSearchResponse {
 	Long getFoodId();
+	
+	Long getCategoryId();
+	
+	String getCategoryName();
+	
+	String getDescription();
+	
+	Integer getQuantity();
+	
+	String getStatus();
 
 	String getFoodName();
 

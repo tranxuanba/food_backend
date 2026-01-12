@@ -34,8 +34,8 @@ public class FoodCategoryController {
 	}
 
 	@PostMapping("/food-categorys/delete")
-	public void deleteFoodCategory(@RequestBody @Valid FoodCategoryRequest.FoodCategorySearchRequest request) {
-		foodCategoryService.getSearchAllFoodCategory(request);
+	public void deleteFoodCategory(@RequestBody @Valid FoodCategoryRequest.FoodCategoryDeleteRequest request) {
+		foodCategoryService.deleteFoodCategory(request);
 	}
 
 	@PostMapping("/food-categorys/update")

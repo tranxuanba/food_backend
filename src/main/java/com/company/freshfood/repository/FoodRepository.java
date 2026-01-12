@@ -15,6 +15,11 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 			    SELECT
 				    MF.FOOD_ID,
 				    MF.FOOD_NAME,
+				    MFC.CATEGORY_ID,
+				    MFC.CATEGORY_NAME,
+				    MF.DESCRIPTION,
+				    MF.QUANTITY,
+				    MF.STATUS,
 				    MF.PRICE,
 				    MFI.IMAGE_URL,
 				    COUNT(*) OVER() AS TOTAL_COUNT

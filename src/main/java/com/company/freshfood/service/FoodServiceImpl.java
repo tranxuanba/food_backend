@@ -2,6 +2,7 @@ package com.company.freshfood.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -64,5 +65,38 @@ public class FoodServiceImpl implements FoodService {
 			throw new ResourceNotFoundException("Không có sản phẩm tương ứng");
 		}
 		return foodDetais.get(0);
+	}
+
+	@Override
+	public void updateFood(FoodRequest.FoodUpdateRequest request) {
+		Optional<FoodEntity> foods = foodRepository.findById(request.getFoodId());
+		FoodEntity foodEntity = foods.get();
+		foodEntity.setCategoryId(request.getCategoryId());
+		foodEntity.setFoodName(request.getFoodName());
+		foodEntity.setDescription(request.getDescription());
+		foodEntity.setPrice(request.getPrice());
+		if (request.getDiscountPrice() != null) {
+			foodEntity.setDiscountPrice(request.getDiscountPrice());
+		}
+		foodEntity.setQuantity(request.getQuantity());
+		foodEntity.setStatus(request.getStatus());
+		foodEntity = foodRepository.save(foodEntity);
+
+		Long foodId = foodEntity.getFoodId();
+		String url = fileStorageService.saveFoodImage(foodId, request.getFoodImage());
+		List<FoodImageEntity> foodImageList = foodImageRepository.findByFoodId(foodId);
+		FoodImageEntity foodImageEntity = foodImageList.get(0);
+		foodImageEntity.setImageUrl(url);
+		foodImageRepository.save(foodImageEntity);
+	}
+
+	@Override
+	public void deleteFood(FoodRequest.FoodDeleteRequest request) {
+		List<FoodImageEntity> foodImageList = foodImageRepository.findByFoodId(request.getFoodId());
+		FoodImageEntity foodImageEntity = foodImageList.get(0);
+		foodImageRepository.delete(foodImageEntity);
+		Optional<FoodEntity> foods = foodRepository.findById(request.getFoodId());
+		FoodEntity foodEntity = foods.get();
+		foodRepository.delete(foodEntity);
 	}
 }

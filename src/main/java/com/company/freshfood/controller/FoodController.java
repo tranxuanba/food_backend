@@ -37,4 +37,14 @@ public class FoodController {
 		FoodDetailResponse foodDetail = foodService.getFoodDetailInfo(request);
 		return foodDetail;
 	}
+
+	@PostMapping("/update-food")
+	public void updateFood(@ModelAttribute FoodRequest.FoodUpdateRequest request) {
+		foodService.updateFood(request);
+	}
+
+	@PostMapping("/delete-food")
+	public void deleteFood(@ModelAttribute FoodRequest.FoodDeleteRequest request) {
+		foodService.deleteFood(request);
+	}
 }

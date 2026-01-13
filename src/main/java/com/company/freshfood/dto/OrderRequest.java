@@ -55,7 +55,7 @@ public class OrderRequest {
 
 		@NotNull
 		private Long foodId;
-		
+
 		@NotNull
 		private Long cartItemId;
 
@@ -64,6 +64,32 @@ public class OrderRequest {
 
 		@NotNull
 		private BigDecimal price;
+
+	}
+
+	@Getter
+	@Setter
+	public static class OrderSearchRequest {
+
+		private String transactionCode;
+
+		private String paymentStatus;
+
+		private Integer limit;
+
+		private Integer offset;
+
+	}
+
+	@Getter
+	@Setter
+	public static class OrderUpdatePaymentStatusRequest {
+
+		@NotNull
+		private Long orderId;
+
+		@NotEmpty
+		private String paymentStatus;
 
 	}
 

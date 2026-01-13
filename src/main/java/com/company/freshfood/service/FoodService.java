@@ -13,5 +13,9 @@ public interface FoodService {
 	List<FoodSearchResponse> getFoodList(FoodRequest.FoodSearchRequest request);
 
 	FoodDetailResponse getFoodDetailInfo(FoodRequest.FoodDetaiRequest request);
+	
+	void updateFood(FoodRequest.FoodUpdateRequest request);
+	
+	void deleteFood(FoodRequest.FoodDeleteRequest request);
 
 }

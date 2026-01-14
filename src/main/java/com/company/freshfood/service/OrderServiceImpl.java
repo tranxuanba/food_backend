@@ -54,13 +54,14 @@ public class OrderServiceImpl implements OrderService {
 		orderEntity.setCreateUserId(request.getUserId());
 		orderEntity.setOrderStatus("0");
 		orderEntity.setCreatedAt(LocalDateTime.now());
+		orderEntity.setNote(request.getNote());
 		orderEntity = orderRepository.save(orderEntity);
 		// đăng ký payment
 		PaymentEntity paymentEntity = new PaymentEntity();
 		paymentEntity.setOrderId(orderEntity.getOrderId());
 		paymentEntity.setPaymentMethod(request.getPaymentMethod()); // 0-trả tiền mặt khi nhận hàng
 		paymentEntity.setPaymentStatus(request.getPaymentStatus()); // 0-chưa trả, 1-đã thanh toán
-		paymentEntity.setTransactionCode("BADUNG_" + orderEntity.getOrderId());
+		paymentEntity.setTransactionCode("BADUNG-" + orderEntity.getOrderId());
 		paymentRepository.save(paymentEntity);
 		// đang ký order item
 		List<Long> cartItemIds = new ArrayList<>();

@@ -23,6 +23,8 @@ public interface OrderSearchResponse {
 	String getReceiverName();
 
 	String getPhone();
+	
+	String getNote();
 
 	String getAddressDetail();
 

@@ -43,6 +43,8 @@ public class OrderRequest {
 
 		@NotNull
 		private BigDecimal totalAmount;
+		
+		private String note;
 
 		@NotNull
 		private List<CartMeOrderRequest> cartMeOrderList;

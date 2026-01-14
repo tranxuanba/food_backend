@@ -15,6 +15,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 				    MO.ORDER_ID,
 				    MO.TOTAL_AMOUNT,
 				    MO.ORDER_STATUS,
+				    MO.NOTE,
 				    TO_CHAR(MO.CREATED_AT, 'YYYY/MM/DD HH24:MI') AS CREATED_AT,
 				    MP.PAYMENT_METHOD,
 				    MP.PAYMENT_STATUS,
@@ -63,6 +64,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 					 MP.TRANSACTION_CODE,
 					 MA.RECEIVER_NAME,
 				     MA.PHONE,
+				     MO.NOTE,
 				     MA.ADDRESS_DETAIL
 				ORDER BY MO.CREATED_AT DESC, MO.ORDER_ID
 				LIMIT :LIMIT OFFSET :OFFSET

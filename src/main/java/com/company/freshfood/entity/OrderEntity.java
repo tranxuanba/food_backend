@@ -22,6 +22,9 @@ public class OrderEntity {
 
     @Column(name = "ADDRESS_ID")
     private Long addressId;
+    
+    @Column(name = "NOTE", columnDefinition = "TEXT")
+    private String note;
 
     @Column(name = "TOTAL_AMOUNT", precision = 10, scale = 0)
     private BigDecimal totalAmount;

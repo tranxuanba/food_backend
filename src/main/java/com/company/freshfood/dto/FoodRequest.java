@@ -1,6 +1,7 @@
 package com.company.freshfood.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,7 @@ public class FoodRequest {
 	@Setter
 	public static class FoodSearchRequest {
 
-		private Long categoryId;
+		private List<Long> categoryIds;
 
 		private String foodName;
 

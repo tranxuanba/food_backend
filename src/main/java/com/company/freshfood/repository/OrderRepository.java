@@ -19,7 +19,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 				    MP.PAYMENT_METHOD,
 				    MP.PAYMENT_STATUS,
 				    MP.TRANSACTION_CODE,
-				    STRING_AGG( MF.FOOD_NAME || '(Số lượng: ' || MOI.QUANTITY || ', Giá: ' || MOI.PRICE || 'đ)', ', ' ORDER BY MF.FOOD_ID) AS ORDER_FOOD_NAME,
+				    STRING_AGG( MF.FOOD_NAME || '(Số lượng: ' || MOI.QUANTITY || ', Giá: ' || MOI.PRICE || 'đ)', '、' ORDER BY MF.FOOD_ID) AS ORDER_FOOD_NAME,
 				    MA.RECEIVER_NAME,
 				    MA.PHONE,
 				    MA.ADDRESS_DETAIL,

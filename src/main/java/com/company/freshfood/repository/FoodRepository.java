@@ -41,14 +41,14 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 				        OR MF.FOOD_NAME ILIKE CONCAT('%', :FOOD_NAME, '%')
 				    )
 				    AND (
-				        :CATEGORY_ID IS NULL
-				        OR MF.CATEGORY_ID = :CATEGORY_ID
+				        :CATEGORY_IDS IS NULL
+				        OR MF.CATEGORY_ID IN (:CATEGORY_IDS)
 				    )
 				ORDER BY MF.FOOD_ID
 				LIMIT :LIMIT OFFSET :OFFSET
 			""", nativeQuery = true)
 	List<FoodSearchResponse> findFoodListByFoodName(@Param("FOOD_NAME") String foodName,
-			@Param("CATEGORY_ID") Long categoryId, @Param("LIMIT") Integer limit, @Param("OFFSET") Integer offset);
+			@Param("CATEGORY_IDS") List<Long> categoryIds, @Param("LIMIT") Integer limit, @Param("OFFSET") Integer offset);
 
 	@Query(value = """
 			    SELECT

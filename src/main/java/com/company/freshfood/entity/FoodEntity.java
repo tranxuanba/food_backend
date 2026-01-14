@@ -29,7 +29,7 @@ public class FoodEntity {
     @Column(name = "FOOD_NAME")
     private String foodName;
     
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "PRICE", precision = 10, scale = 0)

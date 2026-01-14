@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.company.freshfood.dto.FoodCategoryResponse;
 import com.company.freshfood.dto.FoodDetailResponse;
 import com.company.freshfood.dto.FoodRequest;
 import com.company.freshfood.dto.FoodSearchResponse;
@@ -23,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class FoodServiceImpl implements FoodService {
 
 	private final FoodRepository foodRepository;
+
+	private final FoodCategoryService foodCategoryService;
 
 	private final FoodImageRepository foodImageRepository;
 
@@ -52,8 +55,15 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public List<FoodSearchResponse> getFoodList(FoodRequest.FoodSearchRequest request) {
 		List<FoodSearchResponse> foodList = new ArrayList<>();
-		foodList = foodRepository.findFoodListByFoodName(request.getFoodName(), request.getCategoryId(),
-				request.getLimit(), request.getOffset());
+		List<Long> categoryIds;
+		if (request.getCategoryIds() == null || request.getCategoryIds().isEmpty()) {
+			categoryIds = foodCategoryService.getAllFoodCategory().stream().map(FoodCategoryResponse::getCategoryId)
+					.toList();
+		} else {
+			categoryIds = request.getCategoryIds();
+		}
+		foodList = foodRepository.findFoodListByFoodName(request.getFoodName(), categoryIds, request.getLimit(),
+				request.getOffset());
 		return foodList;
 	}
 

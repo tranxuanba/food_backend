@@ -11,7 +11,6 @@ public class CartRequest {
 	@Setter
 	public static class CartMeRequest {
 
-		@NotEmpty
 		private String userId;
 
 	}
@@ -19,7 +18,7 @@ public class CartRequest {
 	@Getter
 	@Setter
 	public static class CartMeUpdateRequest {
-
+		
 		@NotEmpty
 		private String userId;
 

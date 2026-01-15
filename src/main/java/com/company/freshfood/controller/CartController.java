@@ -22,6 +22,9 @@ public class CartController {
 
 	@PostMapping("/cart-me")
 	public List<CartMeResponse> getCartMeList(@ModelAttribute CartRequest.CartMeRequest request) {
+		if (request.getUserId() == null || request.getUserId().isEmpty()) {
+			return null;
+		}
 		List<CartMeResponse> cartList = cartService.getCartMe(request);
 		return cartList;
 	}

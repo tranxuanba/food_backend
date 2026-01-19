@@ -51,7 +51,9 @@ public class OrderServiceImpl implements OrderService {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setAddressId(addressEntity.getAddressId());
 		orderEntity.setTotalAmount(request.getTotalAmount());
-		orderEntity.setCreateUserId(request.getUserId());
+		if (request.getUserId() != null || !request.getUserId().isEmpty()) {
+			orderEntity.setCreateUserId(request.getUserId());
+		}
 		orderEntity.setOrderStatus("0");
 		orderEntity.setCreatedAt(LocalDateTime.now());
 		orderEntity.setNote(request.getNote());
@@ -61,10 +63,9 @@ public class OrderServiceImpl implements OrderService {
 		paymentEntity.setOrderId(orderEntity.getOrderId());
 		paymentEntity.setPaymentMethod(request.getPaymentMethod()); // 0-trả tiền mặt khi nhận hàng
 		paymentEntity.setPaymentStatus(request.getPaymentStatus()); // 0-chưa trả, 1-đã thanh toán
-		paymentEntity.setTransactionCode("BADUNG-" + orderEntity.getOrderId());
+		paymentEntity.setTransactionCode(createTransactionCode(orderEntity.getOrderId()));
 		paymentRepository.save(paymentEntity);
 		// đang ký order item
-		List<Long> cartItemIds = new ArrayList<>();
 		for (CartMeOrderRequest orderRequest : request.getCartMeOrderList()) {
 			OrderItemEntity orderItemEntity = new OrderItemEntity();
 			orderItemEntity.setOrderId(orderEntity.getOrderId());
@@ -72,10 +73,16 @@ public class OrderServiceImpl implements OrderService {
 			orderItemEntity.setQuantity(orderRequest.getQuantity());
 			orderItemEntity.setPrice(orderRequest.getPrice());
 			orderItemRepository.save(orderItemEntity);
-			cartItemIds.add(orderRequest.getCartItemId());
 		}
-		// xóa cart item theo user
-		cartItemRepository.deleteAllById(cartItemIds);
+
+		if (request.getUserId() != null || !request.getUserId().isEmpty()) {
+			List<Long> cartItemIds = new ArrayList<>();
+			for (CartMeOrderRequest orderRequest : request.getCartMeOrderList()) {
+				cartItemIds.add(orderRequest.getCartItemId());
+			}
+			// xóa cart item theo user
+			cartItemRepository.deleteAllById(cartItemIds);
+		}
 	}
 
 	@Override
@@ -92,5 +99,10 @@ public class OrderServiceImpl implements OrderService {
 		}
 		paymentList.get(0).setPaymentStatus(request.getPaymentStatus());
 		paymentRepository.save(paymentList.get(0));
+	}
+
+	private String createTransactionCode(Long orderId) {
+		Long lastCode = 00000L + orderId;
+		return "BADUNG" + lastCode;
 	}
 }

@@ -23,7 +23,6 @@ public class OrderRequest {
 	@Setter
 	public static class OrderMeCreateRequest {
 
-		@NotEmpty
 		private String userId;
 
 		@NotEmpty

@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setAddressId(addressEntity.getAddressId());
 		orderEntity.setTotalAmount(request.getTotalAmount());
-		if (request.getUserId() != null || !request.getUserId().isEmpty()) {
+		if (request.getUserId() != null && !request.getUserId().isEmpty()) {
 			orderEntity.setCreateUserId(request.getUserId());
 		}
 		orderEntity.setOrderStatus("0");
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
 			orderItemRepository.save(orderItemEntity);
 		}
 
-		if (request.getUserId() != null || !request.getUserId().isEmpty()) {
+		if (request.getUserId() != null && !request.getUserId().isEmpty()) {
 			List<Long> cartItemIds = new ArrayList<>();
 			for (CartMeOrderRequest orderRequest : request.getCartMeOrderList()) {
 				cartItemIds.add(orderRequest.getCartItemId());

@@ -18,6 +18,8 @@ public interface FoodSearchResponse {
 	String getFoodName();
 
 	BigDecimal getPrice();
+	
+	BigDecimal getDiscountPrice();
 
 	String getImageUrl();
 	

@@ -13,6 +13,8 @@ public interface CartMeResponse {
 	String getImageUrl();
 
 	BigDecimal getPrice();
+	
+	BigDecimal getDiscountPrice();
 
 	Integer getQuantity();
 

@@ -63,7 +63,7 @@ public class FoodServiceImpl implements FoodService {
 			categoryIds = request.getCategoryIds();
 		}
 		foodList = foodRepository.findFoodListByFoodName(request.getFoodName(), categoryIds, request.getLimit(),
-				request.getOffset());
+				request.getOffset(), request.getDiscountPriceFlag());
 		return foodList;
 	}
 

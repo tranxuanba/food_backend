@@ -19,6 +19,7 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
 			        MF.FOOD_NAME,
 			        MFI.IMAGE_URL,
 			        MF.PRICE,
+			        MF.DISCOUNT_PRICE,
 			        MCI.QUANTITY,
 			        MCI.PRICE AS TOTAL_PRICE,
 			        SUM(MCI.QUANTITY) OVER () AS TOTAL_COUNT

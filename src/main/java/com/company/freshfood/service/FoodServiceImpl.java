@@ -92,12 +92,15 @@ public class FoodServiceImpl implements FoodService {
 		foodEntity.setStatus(request.getStatus());
 		foodEntity = foodRepository.save(foodEntity);
 
-		Long foodId = foodEntity.getFoodId();
-		String url = fileStorageService.saveFoodImage(foodId, request.getFoodImage());
-		List<FoodImageEntity> foodImageList = foodImageRepository.findByFoodId(foodId);
-		FoodImageEntity foodImageEntity = foodImageList.get(0);
-		foodImageEntity.setImageUrl(url);
-		foodImageRepository.save(foodImageEntity);
+		if (request.getFoodImage() != null) {
+			Long foodId = foodEntity.getFoodId();
+			String url = fileStorageService.saveFoodImage(foodId, request.getFoodImage());
+			List<FoodImageEntity> foodImageList = foodImageRepository.findByFoodId(foodId);
+			FoodImageEntity foodImageEntity = foodImageList.get(0);
+			foodImageEntity.setImageUrl(url);
+			foodImageRepository.save(foodImageEntity);
+		}
+
 	}
 
 	@Override

@@ -10,6 +10,8 @@ public interface FoodDetailResponse {
 	String getStatus();
 
 	BigDecimal getPrice();
+	
+	BigDecimal getDiscountPrice();
 
 	String getDescription();
 

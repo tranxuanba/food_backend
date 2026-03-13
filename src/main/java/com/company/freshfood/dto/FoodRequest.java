@@ -51,6 +51,8 @@ public class FoodRequest {
 		private Integer offset;
 		
 		private String discountPriceFlag;
+		
+		private String bestSellerFlag;
 	}
 
 	@Getter

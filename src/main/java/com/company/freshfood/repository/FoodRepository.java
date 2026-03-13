@@ -49,12 +49,26 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 				        :DISCOUNT_PRICE_FLAG = '0'
 				        OR (MF.DISCOUNT_PRICE IS NOT NULL AND MF.DISCOUNT_PRICE <= MF.PRICE)
 				    )
+				    AND (
+					    :BEST_SELLER_FLAG = '0'
+					    OR MF.FOOD_ID IN (
+					        SELECT
+					        	MOI.FOOD_ID
+					        FROM
+					        	M_ORDER_ITEM MOI
+					        GROUP BY
+					        	MOI.FOOD_ID
+					        HAVING
+					        	SUM(MOI.QUANTITY) > 10
+					    )
+					)
 				ORDER BY MF.FOOD_ID
 				LIMIT :LIMIT OFFSET :OFFSET
 			""", nativeQuery = true)
 	List<FoodSearchResponse> findFoodListByFoodName(@Param("FOOD_NAME") String foodName,
 			@Param("CATEGORY_IDS") List<Long> categoryIds, @Param("LIMIT") Integer limit,
-			@Param("OFFSET") Integer offset, @Param("DISCOUNT_PRICE_FLAG") String discountPriceFlag);
+			@Param("OFFSET") Integer offset, @Param("DISCOUNT_PRICE_FLAG") String discountPriceFlag,
+			@Param("BEST_SELLER_FLAG") String bestSellerFlag);
 
 	@Query(value = """
 			    SELECT
